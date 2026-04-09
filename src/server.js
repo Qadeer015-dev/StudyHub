@@ -64,7 +64,7 @@ app.use(API_PREFIX, routes);
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Tuition Management System API',
+    message: 'StudyHub API',
     version: '1.0.0',
     endpoints: {
       health: '/health',
@@ -105,7 +105,7 @@ const startServer = async () => {
       console.log(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
-║   🎓 Tuition Management System API                        ║
+║   🎓 StudyHub API                                          ║
 ║                                                           ║
 ║   Server running on port ${PORT}                            ║
 ║   Environment: ${process.env.NODE_ENV || 'development'}                            ║

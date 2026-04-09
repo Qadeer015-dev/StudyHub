@@ -1,4 +1,4 @@
-# 🎓 Tuition Management System - Backend API
+# 🎓 StudyHub - Backend API
 
 A professional REST API backend for managing home tuition centers (Nursery to 10th grade students). Built with Node.js, Express, and MySQL.
 
@@ -24,7 +24,7 @@ A professional REST API backend for managing home tuition centers (Nursery to 10
 ## Project Structure
 
 ```
-home_tuation/
+StudyHub/
 ├── src/
 │   ├── config/
 │   │   └── database.js          # Database connection pool
@@ -61,7 +61,7 @@ home_tuation/
 
 1. **Clone the repository**
    ```bash
-   cd home_tuation
+   cd StudyHub
    ```
 
 2. **Install dependencies**
@@ -73,16 +73,27 @@ home_tuation/
    
    Edit `.env` file with your database credentials:
    ```env
+   PORT=3000
+   NODE_ENV=development
+   
    DB_HOST=localhost
    DB_PORT=3306
-   DB_NAME=tuition_management
+   DB_NAME=study_hub
    DB_USER=your_mysql_user
    DB_PASSWORD=your_mysql_password
+   
+   API_PREFIX=/api/v1
+   RATE_LIMIT_WINDOW_MS=60000
+   RATE_LIMIT_MAX_REQUESTS=100
+   
+   JWT_SECRET=your_jwt_secret_key
+   JWT_EXPIRES_IN=1h
+   JWT_ISSUER=study_hub_app
    ```
 
 4. **Create database**
    ```sql
-   CREATE DATABASE tuition_management;
+   CREATE DATABASE study_hub;
    ```
 
 5. **Run migrations**
