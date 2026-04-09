@@ -2,143 +2,81 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const compression = require('compression');
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
 
-const { testConnection } = require('./config/database');
-const routes = require('./routes');
+const pool = require('./config/db');
+const academyRoutes = require('./routes/academyRoutes');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const classRoutes = require('./routes/classRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
+const homeworkRoutes = require('./routes/homeworkRoutes');
+const lessonRoutes = require('./routes/lessonRoutes');
+const examRoutes = require('./routes/examRoutes');
+const feeRoutes = require('./routes/feeRoutes');
+const salaryRoutes = require('./routes/salaryRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+const errorHandler = require('./middlewares/errorHandler');
+const apiLimiter = require('./middlewares/rateLimiter');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-// Security middleware
+// Middleware
 app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(apiLimiter);
 
-// CORS configuration
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? false : '*',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+// Routes
+app.use(process.env.BASE_URL, reportRoutes);
+app.use(process.env.BASE_URL, notificationRoutes);
+app.use(process.env.BASE_URL, salaryRoutes);
+app.use(process.env.BASE_URL, feeRoutes);
+app.use(process.env.BASE_URL, classRoutes);
+app.use(process.env.BASE_URL, profileRoutes);
+app.use(process.env.BASE_URL, lessonRoutes);
+app.use(process.env.BASE_URL, examRoutes);
+app.use(`${process.env.BASE_URL}/academies`, academyRoutes);
+app.use(`${process.env.BASE_URL}/auth`, authRoutes);
+app.use(`${process.env.BASE_URL}/users`, userRoutes);
+app.use(`${process.env.BASE_URL}/attendance`, attendanceRoutes);
+app.use(`${process.env.BASE_URL}/homework`, homeworkRoutes);
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
-  message: {
-    success: false,
-    message: 'Too many requests, please try again later.'
-  }
-});
-app.use('/api/', limiter);
-
-// Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Compression
-app.use(compression());
-
-// Logging
-if (process.env.NODE_ENV !== 'test') {
-  app.use(morgan('combined'));
-}
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Server is running',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
-
-// API Routes
-const API_PREFIX = process.env.API_PREFIX || '/api/v1';
-app.use(API_PREFIX, routes);
-
-// Root endpoint
 app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'StudyHub API',
-    version: '1.0.0',
-    endpoints: {
-      health: '/health',
-      api: API_PREFIX
-    }
-  });
+  res.json({ status: 'success', message: 'Welcome to StudyHub API' });
+});
+
+// Health check
+app.get('/health', async (req, res) => {
+  try {
+    await pool.execute('SELECT 1');
+    res.status(200).json({ status: 'OK', database: 'connected' });
+  } catch (error) {
+    res.status(500).json({ status: 'ERROR', database: 'disconnected' });
+  }
 });
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: `Route ${req.originalUrl} not found`
-  });
+  res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 // Global error handler
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
-  
-  const statusCode = err.statusCode || 500;
-  res.status(statusCode).json({
-    success: false,
-    message: process.env.NODE_ENV === 'production' 
-      ? 'Internal server error' 
-      : err.message,
-    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
-  });
-});
+app.use(errorHandler);
 
 // Start server
-const startServer = async () => {
-  try {
-    // Test database connection
-    await testConnection();
-
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   🎓 StudyHub API                                          ║
-║                                                           ║
-║   Server running on port ${PORT}                            ║
-║   Environment: ${process.env.NODE_ENV || 'development'}                            ║
-║   API Prefix: ${API_PREFIX}                                     ║
-║                                                           ║
-║   Health check: http://localhost:${PORT}/health             ║
-║   API endpoints: http://localhost:${PORT}${API_PREFIX}        ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-      `);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+app.listen(PORT, () => {
+  console.log(`Server running on port http://localhost:${PORT}`);
 });
 
-process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
-  process.exit(1);
-});
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
-  process.exit(0);
-});
-
-startServer();
-
-module.exports = app;
+// Handle unhandled rejections
+// process.on('unhandledRejection', (err) => {
+//   console.error('UNHANDLED REJECTION! Shutting down...');
+//   console.error(err);
+//   process.exit(1);
+// });
