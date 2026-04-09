@@ -105,4 +105,3 @@ All responses follow a consistent format:
   ]
 }
 ```
-ISC
