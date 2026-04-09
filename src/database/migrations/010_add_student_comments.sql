@@ -1,0 +1,1 @@
+ALTER TABLE student_homework ADD COLUMN student_comments TEXT NULL AFTER submission_file_url;
