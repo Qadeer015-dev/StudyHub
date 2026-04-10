@@ -33,6 +33,8 @@ app.use(morgan('dev'));
 app.use(apiLimiter);
 
 // Routes
+app.use(`${process.env.BASE_URL}/auth`, authRoutes);
+app.use(`${process.env.BASE_URL}/academies`, academyRoutes);
 app.use(process.env.BASE_URL, reportRoutes);
 app.use(process.env.BASE_URL, notificationRoutes);
 app.use(process.env.BASE_URL, salaryRoutes);
@@ -41,8 +43,6 @@ app.use(process.env.BASE_URL, classRoutes);
 app.use(process.env.BASE_URL, profileRoutes);
 app.use(process.env.BASE_URL, lessonRoutes);
 app.use(process.env.BASE_URL, examRoutes);
-app.use(`${process.env.BASE_URL}/academies`, academyRoutes);
-app.use(`${process.env.BASE_URL}/auth`, authRoutes);
 app.use(`${process.env.BASE_URL}/users`, userRoutes);
 app.use(`${process.env.BASE_URL}/attendance`, attendanceRoutes);
 app.use(`${process.env.BASE_URL}/homework`, homeworkRoutes);
