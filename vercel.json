@@ -8,8 +8,8 @@
     ],
     "routes": [
         {
-            "src": "src/(.*)",
-            "dest": "src/server.js",
+            "src": "/(.*)",
+            "dest": "/src/server.js",
             "methods": [
                 "GET",
                 "POST",
@@ -17,15 +17,7 @@
                 "DELETE",
                 "PATCH",
                 "OPTIONS"
-            ],
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-                "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
-            }
+            ]
         }
-    ],
-    "env": {
-        "NODE_ENV": "production"
-    }
+    ]
 }
