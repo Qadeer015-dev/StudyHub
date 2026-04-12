@@ -1,18 +1,22 @@
 const { v4: uuidv4 } = require('uuid');
 const AcademyModel = require('../models/academyModel');
 const AppError = require('../utils/AppError');
+const generateRegistrationNumber = require("../utils/registrationNumber");
+
+
 
 class AcademyService {
     static async createAcademy(data) {
         // Check if email already exists
-        const existingAcademy = await AcademyModel.findByEmail(data.email);
+        const existingAcademy = await AcademyModel.findByEmail(data.academy_email);
         if (existingAcademy) {
             throw new AppError('Academy with this email already exists', 409);
         }
 
         const academyData = {
             ...data,
-            uuid: uuidv4()
+            uuid: uuidv4(),
+            registration_number: generateRegistrationNumber(12)
         };
 
         const academyId = await AcademyModel.create(academyData);

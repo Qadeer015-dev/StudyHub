@@ -1,7 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const { protect, restrictTo } = require('../middlewares/auth');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const { protect, restrictTo } = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
 const {
     createExamValidation,
     addResultValidation,
@@ -9,8 +8,8 @@ const {
     idParamValidation,
     testIdParamValidation,
     studentIdParamValidation
-} = require('../validations/examValidation');
-const controller = require('../controllers/examController');
+} = require('../../validations/examValidation');
+const controller = require('../../controllers/examController');
 
 router.use(protect);
 

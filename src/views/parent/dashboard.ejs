@@ -1,0 +1,40 @@
+
+        <div class="container py-4">
+            <div class="animate__animated animate__fadeIn">
+                <h2 class="fw-bold">Parent Portal</h2>
+                <p>Stay updated with your child's academic journey</p>
+            </div>
+            <div class="row g-4 mt-2">
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body"><i class="bi bi-person-badge fs-2"></i>
+                            <h5>Child: Liam Martinez</h5>
+                            <p>Grade: 8th · ID: STU-458</p><button class="btn btn-outline-primary btn-sm">View Full
+                                Report</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card shadow-sm p-3">
+                        <h5>📊 Academic Performance</h5><canvas id="progressChart" height="150"></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script>new Chart(document.getElementById('progressChart'), { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr'], datasets: [{ label: 'Average Score', data: [78, 82, 85, 88], borderColor: '#0d6efd' }] } });</script>
+                    </div>
+                </div>
+                <div class="col-md-6 animate-on-scroll">
+                    <div class="card p-3"><i class="bi bi-calendar-check"></i>
+                        <h5>Upcoming Events</h5>
+                        <ul>
+                            <li>Parent-Teacher Meeting: April 20</li>
+                            <li>Science Fair: May 5</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 animate-on-scroll">
+                    <div class="card p-3"><i class="bi bi-chat-dots"></i>
+                        <h5>Teacher Feedback</h5>
+                        <p>“Liam shows great improvement in mathematics. Keep it up!” - Mrs. Green</p>
+                    </div>
+                </div>
+            </div>
+        </div>

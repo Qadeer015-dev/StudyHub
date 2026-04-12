@@ -1,0 +1,183 @@
+<!-- views/register.ejs -->
+<div class="container py-5" data-controller="register">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <!-- Multi-step progress indicator -->
+            <div class="d-flex justify-content-between mb-4">
+                <div class="step-indicator text-center flex-fill" data-target="register.step1Indicator">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px;">1</div>
+                    <div class="small mt-1">Academy Info</div>
+                </div>
+                <div class="step-indicator text-center flex-fill text-muted" data-target="register.step2Indicator">
+                    <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px;">2</div>
+                    <div class="small mt-1">Admin Account</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Academy Details -->
+            <div data-target="register.step1" class="animate__animated animate__fadeIn">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-0 text-center pt-4">
+                        <i class="bi bi-building fs-1 text-primary"></i>
+                        <h3 class="fw-bold mt-2">Create Your Academy</h3>
+                        <p class="text-muted">Set up your institution details</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form data-action="submit->register#submitAcademy">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Academy Name
+                                    <span class="text-danger" for="academyName">*</span>
+                                </label>
+                                <input type="text" class="form-control" data-target="register.academyName" id="academyName"
+                                    placeholder="e.g., Green Valley School" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Academy Email 
+                                    <span class="text-danger" for="academyEmail">*</span>
+                                </label>
+                                <input type="email" class="form-control" data-target="register.academyEmail" id="academyEmail"
+                                    placeholder="admin@academy.com" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold" for="street">
+                                    Street 
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea type="text" rows="2" placeholder="Street address" data-target="register.street" id="street"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold" for="city">
+                                        City 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" placeholder="City" data-target="register.city" id="city" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold" for="state">
+                                        State / Province 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" placeholder="State" data-target="register.state" id="state" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3 row">
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold" for="postalCode">
+                                        Postal Code
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" placeholder="Postal Code" data-target="register.postalCode" id="postalCode" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-semibold" for="country">
+                                        Country 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" data-target="register.country" id="country">
+                                        <option class="form-select" value=""></option>
+                                        <option class="form-select" value="pakistan">Pakistan</option>
+                                        <option class="form-select" value="india">India</option>
+                                        <option class="form-select" value="bangladesh">Bangladesh</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Website 
+                                    <span class="text-muted">(optional)</span>
+                                </label>
+                                <input type="url" class="form-control" data-target="register.website" id="academyWebsite"
+                                    placeholder="https://example.com">
+                            </div>
+                            <div class="alert alert-danger d-none" data-target="register.academyError" id="academyError"></div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Submit <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Admin User Details (hidden initially) -->
+            <div data-target="register.step2" class="animate__animated animate__fadeIn" style="display: none;">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-0 text-center pt-4">
+                        <i class="bi bi-person-plus-circle fs-1 text-primary"></i>
+                        <h3 class="fw-bold mt-2">Create Admin Account</h3>
+                        <p class="text-muted">Set up the academy admin credentials</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form data-action="submit->register#submitAdmin">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Full Name 
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" data-target="register.adminName" id="adminName" placeholder="John Doe" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Email 
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="email" class="form-control" data-target="register.adminEmail" id="adminEmail" placeholder="admin@academy.com"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Phone 
+                                    <span class="text-muted">(optional)</span>
+                                </label>
+                                <input type="tel" class="form-control" data-target="register.adminPhone" id="adminPhone" placeholder="+1234567890">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        Password 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="password" class="form-control" data-target="register.password" id="adminPassword"
+                                        placeholder="******" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        Confirm Password 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="password" class="form-control" data-target="register.confirmPassword" id="confirmPassword"
+                                        placeholder="Confirm" required>
+                                </div>
+                            </div>
+                            <!-- Role is fixed as 'admin' for academy admin -->
+                            <input type="hidden" id="adminRole" value="admin">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label small">I agree to the <a href="#">Terms &
+                                        Conditions</a></label>
+                            </div>
+                            <div class="alert alert-danger d-none" data-target="register.adminError" id="adminError"></div>
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill" data-action="click->register#back"><i
+                                        class="bi bi-arrow-left"></i> Back</button>
+                                <button type="submit" class="btn btn-success btn-lg rounded-pill">Register
+                                    Academy & Admin <i class="bi bi-check-lg"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

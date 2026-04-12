@@ -1,7 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const { protect, restrictTo } = require('../middlewares/auth');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const { protect, restrictTo } = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
 const {
     createLessonValidation,
     updateProgressValidation,
@@ -9,8 +8,8 @@ const {
     classSubjectParamValidation,
     studentIdParamValidation,
     lessonIdParamValidation
-} = require('../validations/lessonValidation');
-const controller = require('../controllers/lessonController');
+} = require('../../validations/lessonValidation');
+const controller = require('../../controllers/lessonController');
 
 router.use(protect);
 

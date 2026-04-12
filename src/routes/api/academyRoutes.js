@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const AcademyController = require('../controllers/academyController');
-const { createAcademyValidation, updateAcademyValidation } = require('../validations/academyValidation');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const AcademyController = require('../../controllers/academyController');
+const { createAcademyValidation, updateAcademyValidation } = require('../../validations/academyValidation');
+const validate = require('../../middlewares/validate');
 
 // Public routes (no authentication yet)
 router.post(

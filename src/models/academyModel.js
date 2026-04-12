@@ -6,16 +6,12 @@ class AcademyModel {
             uuid,
             name,
             registration_number = null,
-            address = null,
+            street = null,
             city = null,
             state = null,
             country = null,
             postal_code = null,
-            email,
-            phone = null,
-            owner_name,
-            owner_phone = null,
-            owner_email = null,
+            academy_email,
             establishment_date = null,
             website = null,
             logo_url = null,
@@ -24,14 +20,15 @@ class AcademyModel {
 
         const [result] = await pool.execute(
             `INSERT INTO academies 
-            (uuid, name, registration_number, address, city, state, country, postal_code, email, phone, owner_name, owner_phone, owner_email, establishment_date, website, logo_url, description) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    (uuid, name, registration_number, street, city, state, country, postal_code, academy_email, establishment_date, website, logo_url, description)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-                uuid, name, registration_number, address, city, state, country, postal_code,
-                email, phone, owner_name, owner_phone, owner_email, establishment_date,
+                uuid, name, registration_number, street, city, state, country, postal_code,
+                academy_email, establishment_date,
                 website, logo_url, description
             ]
         );
+
         return result.insertId;
     }
 
@@ -64,10 +61,10 @@ class AcademyModel {
         return rows[0];
     }
 
-    static async findByEmail(email) {
+    static async findByEmail(academy_email) {
         const [rows] = await pool.execute(
-            'SELECT * FROM academies WHERE email = ? AND deleted_at IS NULL',
-            [email]
+            'SELECT * FROM academies WHERE academy_email = ? AND deleted_at IS NULL',
+            [academy_email]
         );
         return rows[0];
     }

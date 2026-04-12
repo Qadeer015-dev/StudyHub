@@ -1,11 +1,46 @@
 const AuthService = require('../services/authService');
 const AppError = require('../utils/AppError');
 
+const bind = async (req, res, next) => {
+  try {
+    let token = null;
+
+    // 1. Cookie token (WEB priority)
+    if (req.cookies?.token) {
+      token = req.cookies.token;
+    }
+
+    // 2. Bearer token (API fallback)
+    if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      req.user = null;
+      return next();
+    }
+
+    const decoded = AuthService.verifyToken(token);
+    req.user = decoded;
+
+    return next();
+  } catch (error) {
+    // IMPORTANT: do NOT crash request if token invalid
+    req.user = null;
+    return next();
+  }
+};
+
 const protect = async (req, res, next) => {
   try {
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
+    }
+
+    // 1. Cookie token (WEB priority)
+    if (!token && req.cookies?.token) {
+      token = req.cookies.token;
     }
 
     if (!token) {
@@ -37,4 +72,4 @@ const restrictTo = (...roles) => {
   };
 };
 
-module.exports = { protect, restrictTo };
+module.exports = { protect, restrictTo, bind };

@@ -17,8 +17,18 @@ class AuthController {
 
   static async login(req, res, next) {
     try {
-      const { email, password, academy_id } = req.body;
-      const result = await AuthService.login(email, password, academy_id);
+      const { email, password, reqSource } = req.body;
+      const result = await AuthService.login(email, password);
+
+      if (reqSource === 'web') {
+        // Set token cookie
+        res.cookie('token', result.token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 24 * 60 * 60 * 1000 // 1 day
+        });
+      }
+
       res.status(200).json({
         success: true,
         message: 'Login successful',
@@ -49,6 +59,18 @@ class AuthController {
       res.status(200).json({
         success: true,
         message: result.message
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async logout(req, res, next) {
+    try {
+      res.clearCookie('token');
+      res.status(200).json({
+        success: true,
+        message: "Logout successfully!"
       });
     } catch (error) {
       next(error);

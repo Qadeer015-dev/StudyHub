@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS user_roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    role ENUM('admin', 'teacher', 'student', 'parent') NOT NULL,
+    role ENUM('super_admin', 'admin', 'teacher', 'student', 'parent') NOT NULL,
     academy_id INT,
     assigned_by INT,
     assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
