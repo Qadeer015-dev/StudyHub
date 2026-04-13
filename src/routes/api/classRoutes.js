@@ -1,14 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { protect, restrictTo } = require('../middlewares/auth');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const { protect, restrictTo } = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
 const {
     createClassGradeValidation,
     createSubjectValidation,
     assignSubjectValidation,
     idParamValidation
-} = require('../validations/classValidation');
-const controller = require('../controllers/classController');
+} = require('../../validations/classValidation');
+const controller = require('../../controllers/classController');
 
 // All routes protected
 router.use(protect);

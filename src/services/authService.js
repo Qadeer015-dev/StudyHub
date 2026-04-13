@@ -57,7 +57,7 @@ class AuthService {
         };
     }
 
-    static async login(email, password, academy_id = null) {
+    static async login(email, password) {
         // Find user
         const user = await UserModel.findByEmail(email);
         if (!user) {
@@ -76,7 +76,7 @@ class AuthService {
         }
 
         // Get user roles
-        const roles = await UserRoleModel.getUserRoles(user.id, academy_id);
+        const roles = await UserRoleModel.getUserRoles(user.id, user.academy_id);
         if (roles.length === 0) {
             throw new AppError('No active role found for this user', 403);
         }
@@ -88,6 +88,7 @@ class AuthService {
         const token = this.generateToken({
             id: user.id,
             uuid: user.uuid,
+            full_name: user.full_name,
             email: user.email,
             academy_id: user.academy_id,
             roles: roles.map(r => ({ role: r.role, academy_id: r.academy_id }))

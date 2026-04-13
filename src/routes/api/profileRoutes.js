@@ -1,16 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const { protect, restrictTo } = require('../middlewares/auth');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const { protect, restrictTo } = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
 const {
     createStudentProfileValidation,
     createParentProfileValidation,
     linkParentStudentValidation,
     idParamValidation
-} = require('../validations/profileValidation');
-const studentController = require('../controllers/studentProfileController');
-const parentController = require('../controllers/parentProfileController');
-const linkController = require('../controllers/parentStudentLinkController'); // Ensure this is correct
+} = require('../../validations/profileValidation');
+const studentController = require('../../controllers/studentProfileController');
+const parentController = require('../../controllers/parentProfileController');
+const linkController = require('../../controllers/parentStudentLinkController'); // Ensure this is correct
 
 // All routes protected
 router.use(protect);

@@ -1,14 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const UserController = require('../controllers/userController');
-const { protect, restrictTo } = require('../middlewares/auth');
+const router = require('../router')();
+const UserController = require('../../controllers/userController');
+const { protect, restrictTo } = require('../../middlewares/auth');
 const {
     updateUserValidation,
     assignRoleValidation,
     resetPasswordValidation,
     userIdParamValidation
-} = require('../validations/userValidation');
-const validate = require('../middlewares/validate');
+} = require('../../validations/userValidation');
+const validate = require('../../middlewares/validate');
 
 // All routes require authentication
 router.use(protect);

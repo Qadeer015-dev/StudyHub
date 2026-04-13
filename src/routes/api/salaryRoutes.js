@@ -1,14 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { protect, restrictTo } = require('../middlewares/auth');
-const validate = require('../middlewares/validate');
+const router = require('../router')();
+const { protect, restrictTo } = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
 const {
     createSalaryStructureValidation,
     recordPaymentValidation,
     idParamValidation,
     teacherIdParamValidation
-} = require('../validations/salaryValidation');
-const controller = require('../controllers/salaryController');
+} = require('../../validations/salaryValidation');
+const controller = require('../../controllers/salaryController');
 
 router.use(protect);
 
