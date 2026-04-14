@@ -101,17 +101,27 @@ class UserModel {
     }
 
     static async findAll(filter = {}) {
-        let query = `SELECT id, uuid, academy_id, email, phone, full_name, is_active, created_at 
-                    FROM users WHERE deleted_at IS NULL`;
+        let query = `
+        SELECT u.id, u.uuid, u.academy_id, u.email, u.phone, u.full_name, 
+               u.is_active, u.created_at, ur.role
+        FROM users u
+        INNER JOIN user_roles ur ON u.id = ur.user_id
+        WHERE u.deleted_at IS NULL
+          AND ur.is_active = 1
+    `;
         const params = [];
 
         if (filter.academy_id) {
-            query += ' AND academy_id = ?';
+            query += ' AND u.academy_id = ?';
             params.push(filter.academy_id);
         }
         if (filter.is_active !== undefined) {
-            query += ' AND is_active = ?';
+            query += ' AND u.is_active = ?';
             params.push(filter.is_active);
+        }
+        if (filter.role) {
+            query += ' AND ur.role = ?';
+            params.push(filter.role);
         }
 
         const [rows] = await pool.execute(query, params);

@@ -54,7 +54,26 @@ export class Framework {
                 this.instances.set(el, controller);
 
                 controller.connect?.();
+
+                // 🔥 ADD THIS (IMPORTANT)
+                this.runAction(controller, el);
             });
+        });
+    }
+
+    runAction(controller, el) {
+        const actionAttr = el.dataset.action;
+
+        if (!actionAttr) return; // ✅ prevent crash
+
+        const actions = actionAttr.split(" ");
+        
+        if (!actions) return;
+
+        actions.forEach(action => {
+            if (typeof controller[action] === "function") {
+                controller[action]();
+            }
         });
     }
 
@@ -65,7 +84,7 @@ export class Framework {
     }
 
     bindTargets(controller, name) {
-        controller.targets = {};
+        controller.targets = controller.targets || {};
 
         const elements = controller.element.querySelectorAll(`[data-target^="${name}."]`);
 
@@ -78,8 +97,37 @@ export class Framework {
 
             controller.targets[targetName].push(el);
         });
-    }
 
+        // 🔥 Stimulus-style helpers
+        Object.keys(controller.targets).forEach((targetName) => {
+
+            // single target
+            Object.defineProperty(controller, `${targetName}Target`, {
+                get() {
+                    return controller.targets[targetName][0];
+                }
+            });
+
+            // multiple targets
+            Object.defineProperty(controller, `${targetName}Targets`, {
+                get() {
+                    return controller.targets[targetName];
+                }
+            });
+
+            // has target
+            Object.defineProperty(controller, `has${capitalize(targetName)}Target`, {
+                get() {
+                    return controller.targets[targetName]?.length > 0;
+                }
+            });
+        });
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    }
+    
     bindValues(controller, name) {
         controller.values = {};
 

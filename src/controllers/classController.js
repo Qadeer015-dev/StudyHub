@@ -5,7 +5,11 @@ const ClassSubjectService = require('../services/classSubjectService');
 // Class Grade Controllers
 exports.createClassGrade = async (req, res, next) => {
     try {
-        const result = await ClassGradeService.create(req.body);
+        const payload = {
+            ...req.body,
+            academy_id: req.user.academy_id
+        };
+        const result = await ClassGradeService.create(payload);
         res.status(201).json({ success: true, ...result });
     } catch (error) { next(error); }
 };

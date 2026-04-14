@@ -1,0 +1,31 @@
+<div class="container py-4" data-controller="classes" data-action="show">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Class Details</h2>
+
+        <div>
+            <a href="/classes" class="btn btn-outline-secondary me-2">Back</a>
+            <a href="#" class="btn btn-warning" data-target="classes.editBtn">Edit</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-2" data-target="classes.displayName"></h4>
+            <p class="text-muted mb-3" data-target="classes.name"></p>
+
+            <div class="mb-3">
+                <span class="badge bg-primary" data-target="classes.gradeLevel"></span>
+            </div>
+
+            <hr>
+
+            <p data-target="classes.description"></p>
+
+            <small class="text-muted">
+                Created at: <span data-target="classes.createdAt"></span>
+            </small>
+
+        </div>
+    </div>
+</div>

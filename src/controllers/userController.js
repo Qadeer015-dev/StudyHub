@@ -7,7 +7,8 @@ class UserController {
             const filter = {
                 academy_id: req.query.academy_id,
                 is_active: req.query.is_active === 'true' ? true :
-                    req.query.is_active === 'false' ? false : undefined
+                    req.query.is_active === 'false' ? false : undefined,
+                role: req.query.role   // e.g., 'teacher', 'admin', 'student', 'parent'
             };
             const users = await UserService.getAllUsers(filter);
             res.status(200).json({

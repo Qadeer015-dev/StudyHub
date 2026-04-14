@@ -1,0 +1,40 @@
+<div class="container py-4" data-controller="user_management" data-action="new">
+
+    <h2 class="fw-bold mb-4">Create User</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+                    <form data-target="user_management.form">
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input class="form-control" data-target="user_management.fullName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="email" data-target="user_management.email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" data-target="user_management.phone">
+                        </div>
+
+                        <button class="btn btn-primary w-100">
+                            Create User
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

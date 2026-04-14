@@ -3,8 +3,8 @@ const AppError = require('../utils/AppError');
 
 class ClassGradeService {
     static async create(data) {
-        const { academy_id, name, grade_level } = data;
-
+        const { academy_id, name, display_name, grade_level, description } = data;
+        
         // Basic validation
         if (!academy_id) throw new AppError('Academy ID is required', 400);
 

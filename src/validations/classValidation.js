@@ -1,7 +1,6 @@
 const { body, param } = require('express-validator');
 
 const createClassGradeValidation = [
-    body('academy_id').isInt().withMessage('Academy ID required'),
     body('name').notEmpty().withMessage('Name required'),
     body('display_name').notEmpty().withMessage('Display name required'),
     body('grade_level').isInt({ min: 0 }).withMessage('Grade level must be a positive integer'),

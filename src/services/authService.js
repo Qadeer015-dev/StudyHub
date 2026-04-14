@@ -26,7 +26,7 @@ class AuthService {
         // Hash password
         const salt = await bcrypt.genSalt(10);
         const password_hash = await bcrypt.hash(password, salt);
-
+        console.log(password_hash);
         // Create user
         const newUser = {
             uuid: uuidv4(),

@@ -22,12 +22,14 @@ const feeRoutes = require('../routes/api/feeRoutes');
 const salaryRoutes = require('../routes/api/salaryRoutes');
 const notificationRoutes = require('../routes/api/notificationRoutes');
 const reportRoutes = require('../routes/api/reportRoutes');
+const dashboardRoutes = require('../routes/api/dashboardRoutes');
 const errorHandler = require('../middlewares/errorHandler');
 const apiLimiter = require('../middlewares/rateLimiter');
 const { bind } = require("../middlewares/auth");
 
 // web routes
 const authRoute = require('../routes/web/authRoutes');
+const adminRoute = require('../routes/web/adminRoutes');
 
 const app = express();
 
@@ -65,19 +67,44 @@ app.use(process.env.BASE_URL, examRoutes);
 app.use(`${process.env.BASE_URL}/users`, userRoutes);
 app.use(`${process.env.BASE_URL}/attendance`, attendanceRoutes);
 app.use(`${process.env.BASE_URL}/homework`, homeworkRoutes);
+app.use(`${process.env.BASE_URL}/dashboard`, dashboardRoutes);
 
 app.use(bind);
 
 app.use((req, res, next) => {
     res.locals.title = req.path.split('/')[1] ? req.path.split('/')[1].charAt(0).toUpperCase() + req.path.split('/')[1].slice(1) : 'Home';
     res.locals.user = req.user || null;
+    res.locals.academyId = req.user?.academyId || null;
+
+    if (req.user && req.user.roles && req.user.roles.length > 0) {
+        const role = req.user.roles[0].role;  // Extract the string role
+        if (role === 'admin') {
+            res.locals.layout = "layouts/admin";
+        } else if (role === 'teacher') {
+            res.locals.layout = "layouts/teacher";
+        } else if (role === 'student') {
+            res.locals.layout = "layouts/student";
+        } else if (role === 'parent') {
+            res.locals.layout = "layouts/parent";
+        }
+    }
     next();
 });
 
 app.use(authRoute);
+app.use(adminRoute);
 
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Home' });
+    const user = req.user;
+    console.log(user);
+
+    if (user && user.roles && user.roles.length > 0) {
+        const role = user.roles[0].role;  // assuming the first role is the primary one
+
+        return res.render('dashboard', { role })
+    } else {
+        return res.render('index', { title: 'Home' });
+    }
 });
 
 // Health check

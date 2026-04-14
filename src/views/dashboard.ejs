@@ -1,0 +1,180 @@
+<!-- Admin Dashboard -->
+<% if(user && role==="admin" ) {%>
+    <div data-controller="dashboard">
+        <h2 class="fw-bold">Dashboard Overview</h2>
+        <p>Welcome back, <strong>Admin</strong>! Here's your platform summary.</p>
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card stat-card border-start-primary shadow-sm p-3">
+                    <h5>Total Students</h5>
+                    <h2 class="text-primary" data-target="dashboard.totalStudents"></h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card border-start-success shadow-sm p-3">
+                    <h5>Total Classes</h5>
+                    <h2 class="text-success" data-target="dashboard.totalClasses"></h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card border-start-warning shadow-sm p-3">
+                    <h5>Teachers</h5>
+                    <h2 class="text-warning" data-target="dashboard.teachers"></h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card border-start-info shadow-sm p-3">
+                    <h5>Fee Collected</h5>
+                    <h2 class="text-info" data-target="dashboard.feeCollected"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow-sm p-3 animate-on-scroll">
+            <h5>Recent Activity</h5>
+
+            <h6 class="mt-3 text-primary">Recent Payments</h6>
+            <ul class="list-group list-group-flush mb-3" data-target="dashboard.recentPaymentsList">
+                <li class="list-group-item text-muted">Loading payments...</li>
+            </ul>
+
+            <h6 class="mt-3 text-success">Recent Attendance</h6>
+            <ul class="list-group list-group-flush" data-target="dashboard.recentAttendanceList">
+                <li class="list-group-item text-muted">Loading attendance...</li>
+            </ul>
+        </div>
+    </div>
+<%}%>
+
+<!-- Teacher Dashboard -->
+<% if(user && role ==="teacher" ) {%>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-3 bg-white vh-100 p-3 shadow-sm d-none d-md-block">
+                <h5 class="text-info mb-4"><i class="bi bi-easel"></i> Teacher Zone</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="#" class="nav-link sidebar-link active">My Classes</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link sidebar-link">Assignments</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link sidebar-link">Students</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link sidebar-link">Gradebook</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-10 col-md-9">
+                <div class="animate__animated animate__fadeInUp">
+                    <h2 class="fw-bold">Welcome, Mr. Thompson</h2>
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-6">
+                            <div class="card card-hover p-3">
+                                <h5><i class="bi bi-calendar-week"></i> Upcoming Classes</h5>
+                                <ul>
+                                    <li>Math 101 - Tomorrow 10 AM</li>
+                                    <li>Physics Lab - Friday 2 PM</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-hover p-3">
+                                <h5><i class="bi bi-journal-check"></i> Pending Grading</h5>
+                                <h3>24 submissions</h3>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" style="width:45%">45% graded</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 card p-3 animate-on-scroll">
+                        <h5>📢 Recent Announcement</h5>
+                        <p>Midterm schedule released: April 10-15. Prepare review sessions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>
+
+<!-- Student Dashboard -->
+<% if(user && role==="student" ) {%>
+    <!-- views/student-dashboard.ejs -->
+    <div class="container py-3">
+        <div class="row g-4">
+            <div class="col-md-4 animate__animated animate__fadeInLeft">
+                <div class="card text-center shadow-sm p-3"><img
+                        src="https://ui-avatars.com/api/?background=0d6efd&color=fff&name=Emma"
+                        class="rounded-circle mx-auto mb-2" width="80">
+                    <h4>Emma Watson</h4><span class="badge bg-primary">Student</span>
+                    <hr>
+                    <p><i class="bi bi-envelope"></i> emma@studyhub.com</p>
+                </div>
+            </div>
+            <div class="col-md-8 animate__animated animate__fadeInRight">
+                <div class="card shadow-sm p-4">
+                    <h3>📚 My Courses</h3>
+                    <div class="list-group mt-3"><a href="#"
+                            class="list-group-item list-group-item-action">Web
+                            Development Bootcamp - 78% progress <div class="progress mt-1">
+                                <div class="progress-bar" style="width:78%"></div>
+                            </div></a><a href="#" class="list-group-item list-group-item-action">Data
+                            Science Basics
+                            - 45%<div class="progress mt-1">
+                                <div class="progress-bar bg-success" style="width:45%"></div>
+                            </div></a><a href="#" class="list-group-item list-group-item-action">UI/UX
+                            Design - 92%
+                            <div class="progress mt-1">
+                                <div class="progress-bar bg-warning" style="width:92%"></div>
+                            </div>
+                        </a></div>
+                    <div class="mt-4">
+                        <h5>🏆 Recent Achievements</h5><span class="badge rounded-pill bg-info">Quiz
+                            Master</span>
+                        <span class="badge rounded-pill bg-success">Consistent Learner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>
+
+<!-- Parent Dashboard -->
+<% if(user && role==="parent" ) {%>
+    <div class="container py-4">
+        <div class="animate__animated animate__fadeIn">
+            <h2 class="fw-bold">Parent Portal</h2>
+            <p>Stay updated with your child's academic journey</p>
+        </div>
+        <div class="row g-4 mt-2">
+            <div class="col-md-4 animate-on-scroll">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body"><i class="bi bi-person-badge fs-2"></i>
+                        <h5>Child: Liam Martinez</h5>
+                        <p>Grade: 8th · ID: STU-458</p><button
+                            class="btn btn-outline-primary btn-sm">View Full
+                            Report</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card shadow-sm p-3">
+                    <h5>📊 Academic Performance</h5><canvas id="progressChart"
+                        height="150"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>new Chart(document.getElementById('progressChart'), { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr'], datasets: [{ label: 'Average Score', data: [78, 82, 85, 88], borderColor: '#0d6efd' }] } });</script>
+                </div>
+            </div>
+            <div class="col-md-6 animate-on-scroll">
+                <div class="card p-3"><i class="bi bi-calendar-check"></i>
+                    <h5>Upcoming Events</h5>
+                    <ul>
+                        <li>Parent-Teacher Meeting: April 20</li>
+                        <li>Science Fair: May 5</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 animate-on-scroll">
+                <div class="card p-3"><i class="bi bi-chat-dots"></i>
+                    <h5>Teacher Feedback</h5>
+                    <p>“Liam shows great improvement in mathematics. Keep it up!” - Mrs. Green
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>

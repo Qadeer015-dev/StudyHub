@@ -1,0 +1,59 @@
+<div class="container py-4" data-controller="classes" data-action="edit">
+    <h2 class="fw-bold mb-4">Edit Class</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+                    <form data-target="classes.form">
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Title</label>
+                            <input type="text" class="form-control" data-target="classes.displayName" required>
+                        </div>
+
+                        <!-- Subtitle -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Subtitle</label>
+                            <input type="text" class="form-control" data-target="classes.name" required>
+                        </div>
+
+                        <!-- Grade -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Grade Level</label>
+                            <select class="form-select" data-target="classes.gradeLevel" required>
+                                <option value="">Select Grade</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                                <option value="3">Grade 3</option>
+                                <option value="4">Grade 4</option>
+                                <option value="5">Grade 5</option>
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Description</label>
+                            <textarea class="form-control" rows="3" data-target="classes.description"></textarea>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-warning">
+                                Update Class
+                            </button>
+
+                            <a href="/classes" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

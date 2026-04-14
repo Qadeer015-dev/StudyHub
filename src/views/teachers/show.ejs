@@ -1,0 +1,26 @@
+<div class="container py-4" data-controller="user_management" data-action="show">
+
+    <div class="d-flex justify-content-between mb-4">
+        <h2 class="fw-bold">User Details</h2>
+        <a class="btn btn-warning" data-target="user_management.editBtn">Edit</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h4 data-target="user_management.fullName"></h4>
+            <p class="text-muted" data-target="user_management.email"></p>
+            <p data-target="user_management.phone"></p>
+
+            <span class="badge bg-primary" data-target="user_management.role"></span>
+
+            <hr>
+
+            <small class="text-muted">
+                Created: <span data-target="user_management.createdAt"></span>
+            </small>
+
+        </div>
+    </div>
+
+</div>
