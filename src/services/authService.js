@@ -138,6 +138,21 @@ class AuthService {
         await UserModel.update(userId, { password_hash: newPasswordHash });
         return { message: 'Password changed successfully' };
     }
+
+    static async requestPasswordReset(email) {
+        const user = await UserModel.findByEmail(email);
+        if (!user) {
+            // For security reasons, don't reveal if the user doesn't exist.
+            // Just log and return a generic success message.
+            console.log(`Password reset requested for unknown email: ${email}`);
+            return { success: true };
+        }
+
+        // TODO: Generate and store reset token, and send email.
+        // For now, just a placeholder.
+        console.log(`Password reset requested for user: ${user.email}`);
+        return { success: true };
+    }
 }
 
 module.exports = AuthService;
