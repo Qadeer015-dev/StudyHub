@@ -67,10 +67,24 @@ class AuthController {
 
   static async logout(req, res, next) {
     try {
-      res.clearCookie('token');
+      res.clearCookie("token");
       res.status(200).json({
         success: true,
         message: "Logout successfully!"
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async forgotPassword(req, res, next) {
+    try {
+      const { email } = req.body;
+      console.log(`Received password reset request for email: ${email, req.body}`);
+      await AuthService.requestPasswordReset(email);
+      res.status(200).json({
+        success: true,
+        message: "If an account with that email exists, a password reset link has been sent."
       });
     } catch (error) {
       next(error);

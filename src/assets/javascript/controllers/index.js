@@ -4,7 +4,8 @@ import { Framework } from "../core/framework.js";
 const controllerFiles = [
     "./register_controller.js",
     "./login_controller.js",
-    "./logout_controller.js"
+    "./logout_controller.js",
+    "./forgotPassword_controller.js"
 ];
 
 const app = new Framework();
